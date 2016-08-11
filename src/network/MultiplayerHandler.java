@@ -46,13 +46,13 @@ public class MultiplayerHandler implements Runnable
     
     public MultiplayerHandler(Player player)
     {
-        hostAddress = "81.225.136.216";
+        hostAddress = "127.0.0.1";
         this.player = player;
     }
     
     public MultiplayerHandler(boolean host, Player player)
     {
-        hostAddress = "192.168.0.100";
+        hostAddress = "127.0.0.1";
         this.host = !host;
         setAsHost(host);
         this.player = player;
@@ -323,7 +323,7 @@ public class MultiplayerHandler implements Runnable
             {
                 try {
                     updates.add("pos 0 " + player.getX() + " " + player.getY());
-                    updates.add("vel 0 " + player.getVelocity().x + " " + player.getVelocity().y);
+                    //updates.add("vel 0 " + player.getVelocity().x + " " + player.getVelocity().y);
                 } catch (Exception e) {}
                 timer = 0;
             }
@@ -349,8 +349,8 @@ public class MultiplayerHandler implements Runnable
             if(timer >= timerLimit || player.hasNewData())
             {
                 try {
-                    writer.writeBytes("pos " + player.getX() + " " + player.getY() + "\r\n" +
-                                      "vel " + player.getVelocity().x + " " + player.getVelocity().y + "\r\n");
+                    //writer.writeBytes("pos " + player.getX() + " " + player.getY() + "\r\n" +
+                    //                  "vel " + player.getVelocity().x + " " + player.getVelocity().y + "\r\n");
                 } catch (Exception e) {}
                 timer = 0;
             }

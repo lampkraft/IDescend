@@ -1,36 +1,64 @@
 package graphics;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
-public class SpriteSheet 
-{
-	private String path;
-	private final int SIZE;
-	public int[] pixels;
+public class SpriteSheet {
 	
-	public SpriteSheet(String path, int size)
-	{
-		this.path = path;
-		SIZE = size;
-		pixels = new int[SIZE * SIZE];
-		load();
+	private BufferedImage image, spriteSheet;
+	private List<BufferedImage> images;
+	private int currentFrame, width, height, x, y, row, col, numberOfFrames;
+	
+	public SpriteSheet(BufferedImage image, int x, int y, int width, int height, int col, int row, int numberOfFrames) {
+		
+		this.image = image;
+		this.width = width;
+		this.height = height;
+		this.x = x;
+		this.y = y;
+		this.row = row;
+		this.col = col;
+		this.numberOfFrames = numberOfFrames;
+		images = new ArrayList<BufferedImage>();
+		extractImagesFromSpriteSheet();
 	}
 	
-	private void load()
-	{
-		try 
-		{
-			BufferedImage image = ImageIO.read(SpriteSheet.class.getResource(path));
-			int w = image.getWidth();
-			int h = image.getHeight();
-			image.getRGB(0, 0, w, h, pixels, 0, w);
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
+	public BufferedImage getSubimage(int num) {
+		return images.get(num);
+	}
+	
+	private void extractImagesFromSpriteSheet() {
+		for(int i = 0; i < row; i++) {
+			for(int a = 0; a < col; a++) {
+				if(images.size() < numberOfFrames) {
+					images.add(image.getSubimage(x + (a * width), y + (i * height), width, height));
+					//System.out.println(images.get(i));
+				} else {
+					break;
+				}
+				
+			}
 		}
+	}
+	
+	public int getCurrentFrame() {
+		return currentFrame;
+	}
+	
+	public int getNumberOfFrames() {
+		return numberOfFrames;
+	}
+	
+	public int getSpriteWidth() {
+		return width;
+	}
+	
+	public int getSpriteHeight() {
+		return width;
 	}
 }

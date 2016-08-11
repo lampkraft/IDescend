@@ -1,6 +1,5 @@
 package network;
 
-import graphics.Vector2f;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +8,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import math.Vector2f;
 
 
 /**

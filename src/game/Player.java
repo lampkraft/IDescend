@@ -1,10 +1,13 @@
 package game;
 
 
-import graphics.Vector2f;
 import input.Keyboard;
+import math.Vector2f;
+import graphics.SpriteSheet;
 import graphics.View;
 import java.awt.image.BufferedImage;
+
+import character.Character;
 
 /**
  *
@@ -18,8 +21,7 @@ public class Player extends Character
     
     public Player(BufferedImage image)
     {
-        super(0, 0, image);
-        this.image = image;
+        super(0, 0, image, true);
     }
 
     public void update(Keyboard key, double delta, View view)
@@ -36,23 +38,27 @@ public class Player extends Character
             moveLeft();
         if(key.right.isHeld() || key.dkey.isHeld())
             moveRight();
+        if(key.zkey.isHeld())
+            attack(direction);
         
         move(delta);
+        if(direction == 90 || direction == 270) {
+        	xScaleLocal = (float)Math.sin(Math.toRadians(direction));
+        }
         
         if(!velocity.compare(prevVel))
             newData = true;
 
         view.setPosition(xPos, yPos);
+        depth = (int)-yPos;
     }
     
     public boolean hasNewData()
     {
-        if(newData)
-        {
+        if(newData) {
             newData = false;
             return true;
-        }
-        else
+        } else
             return false;    
     }
 }
