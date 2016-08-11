@@ -122,10 +122,10 @@ public class Level{
 	}
 	
 	private void generateBackground() {
-        for(int hor = 0; hor < 50; hor++) {
-            for(int ver = 0; ver < 50; ver++) {
+        for(int hor = 0; hor < 20; hor++) {
+            for(int ver = 0; ver < 20; ver++) {
 				try {
-					ObjectsController.addTile(new Tile(64 * hor, 64 * ver, 64, 64, 2f, ImageIO.read(new File("res/tiles/grass.png")), false));
+					ObjectsController.addTile(new Tile(90 * hor, 60 * ver, 150, 60, 2f, ImageIO.read(new File("res/tiles/tile_150_60_00.png")), false));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

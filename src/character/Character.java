@@ -6,7 +6,11 @@ import math.Vector2f;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Ellipse2D.Double;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +31,8 @@ public class Character extends Entity {
     public SpriteSheet spriteHurt, spriteWalk, spriteAttack, spriteDeath, spriteIdle, spriteCorpse;
     public Attributes attributes;
     private Ellipse2D.Double shadow = new Ellipse2D.Double(0, 0, 0, 0);
+    private AffineTransform tx;
+    private int i = 0;
 
     public Character(float x, float y, BufferedImage image, boolean animatable) {
     	
@@ -92,7 +98,7 @@ public class Character extends Entity {
     	if(!isAttacking) {
     		animate.setAnimation(4, spriteWalk, true, null);
     	}
-    	velocity.y += (acceleration * friction)/2;
+    	velocity.y += (acceleration * friction);
     }
 
     public void moveDown() {
@@ -100,7 +106,7 @@ public class Character extends Entity {
     	if(!isAttacking) {
     		animate.setAnimation(4, spriteWalk, true, null);
     	}
-    	velocity.y -= (acceleration * friction)/2;
+    	velocity.y -= (acceleration * friction);
     }
 
     public void moveRight() {
@@ -163,11 +169,14 @@ public class Character extends Entity {
 	        
 	        //if(xScaleLocal == -1) isFlipped = 1;
 	        //else isFlipped = 0;
-	        
+	        i++;
 	        g.setColor(new Color(0f, 0f, 0f, 0.3f));
 	        //g.drawOval((int)(drawPosition.x-width/2), (int)drawPosition.y + height-10, (int)width, 10);
-	        shadow.setFrame((int)(drawPosition.x-(width*0.5)/2), (int)drawPosition.y + height-15, (int)width*0.5, 10);
-	        g.fill(shadow);
+	        shadow.setFrame((int)(drawPosition.x - 35), (int)drawPosition.y + height-13, 60, 10);
+	        tx = AffineTransform.getRotateInstance(Math.toRadians (0), (int)(drawPosition.x - 35)+60/2, (int)(drawPosition.y + height-13)+10/2);
+	        Shape rotatedShadow = tx.createTransformedShape(shadow);
+	        
+	        g.fill(rotatedShadow);
 	        g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
 	        //g.setColor(new Color(255, 0, 0));
 	        //g.drawRect( (int)(drawPosition.x-(xScaleLocal*(width/2)) - width * isFlipped), (int)drawPosition.y, (int)(drawScale.x), (int)drawScale.y);
