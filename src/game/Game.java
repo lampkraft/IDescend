@@ -51,7 +51,6 @@ public class Game extends Canvas implements Runnable
     private Player player;
     private List<NetworkPlayer> netPlayers = new ArrayList();
     private Level level;
-    private Background background;
 
     private MultiplayerHandler multiplayer;
 
@@ -89,7 +88,6 @@ public class Game extends Canvas implements Runnable
     {
         try {
 			player = new Player(ImageIO.read(new File("res/sprites/skeleton_walk.png")));
-			background  = new Background(ImageIO.read(new File("res/backgrounds/fog.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -232,7 +230,6 @@ public class Game extends Canvas implements Runnable
         g.fillRect(0, 0, getWidth(), getHeight());
 
         // Draw begin
-        background.drawTiled(g, view);
         level.render(g, view);
 
         for(NetworkPlayer c : netPlayers) {

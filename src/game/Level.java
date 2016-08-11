@@ -22,6 +22,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import character.Character;
+import graphics.Background;
 import graphics.Tile;
 import graphics.View;
 import math.Maths;
@@ -31,13 +32,11 @@ public class Level{
 	private FileReader fr;
 	private BufferedReader br;
 	private Player player;
+	private Background background;
 
 	
 	public Level(Player player, String path) {
 		this.player = player;
-		//objects = new ArrayList<Entity>();
-		//tiles = new ArrayList<Entity>();
-		//characters = new ArrayList<Character>();
 		ObjectsController.addObject(player);
 		loadLevelData(path);
 		System.gc();
@@ -46,6 +45,7 @@ public class Level{
 	private void loadLevelData(String path) {
 		
 		try {
+			background  = new Background(ImageIO.read(new File("res/backgrounds/fog.png")));
 			fr = new FileReader(path);
 			JSONParser parser = new JSONParser();
 			Object o = parser.parse(fr);
@@ -140,6 +140,8 @@ public class Level{
 	
 	public void render(Graphics2D g, View view) {
 
+		background.drawTiled(g, view);
+		
 		ObjectsController.tilesIterator = ObjectsController.tiles.iterator();
 		Entity t;
 		while(ObjectsController.tilesIterator.hasNext()) {//Draw background
