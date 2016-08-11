@@ -232,7 +232,7 @@ public class Game extends Canvas implements Runnable
         g.fillRect(0, 0, getWidth(), getHeight());
 
         // Draw begin
-        background.drawStretched(g, view);
+        background.drawTiled(g, view);
         level.render(g, view);
 
         for(NetworkPlayer c : netPlayers) {
