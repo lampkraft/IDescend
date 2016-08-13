@@ -140,7 +140,7 @@ public class Game extends Canvas implements Runnable
             if (System.currentTimeMillis() - timer > 1000)
             {
                 timer += 1000;
-                frame.setTitle(title + " | " + ups + "ups | " + frames + " fps" + " | Player width and height: " + player.getWidth() + " " + player.getHeight() + "| Player position: x " + player.getX() + " y " + player.getY());
+                frame.setTitle(title + " | " + ups + "ups | " + frames + " fps" + " | Player width and height: " + player.getWidth() + "(" + player.getCollisionBox().right  + ") " + player.getHeight() + "(" + player.getCollisionBox().bottom  + ") " + "| Player position: x " + player.getX() + " y " + player.getY());
                 ups = 0;
                 frames = 0;
             }

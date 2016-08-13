@@ -1,51 +1,29 @@
 package math;
 
 public class Box {
-	private int left, top, right, bottom;
+	public int left, top, right, bottom;
 	
 	public Box() {
-		this.setRight(0);
-		this.setBottom(0);
-		this.setLeft(0);
-		this.setTop(0);
+		this.right = 0;
+		this.bottom = 0;
+		this.left = 0;
+		this.top = 0;
 	}
 	
-	public Box(int right, int bottom, int left, int top) {
-		this.setRight(right);
-		this.setBottom(bottom);
-		this.setLeft(left);
-		this.setTop(top);
-	}
-
-	public int getBottom() {
-		return bottom;
-	}
-
-	public void setBottom(int bottom) {
+	public Box( int left, int top, int right, int bottom) {
+		this.right = right;
 		this.bottom = bottom;
-	}
-
-	public int getTop() {
-		return top;
-	}
-
-	public void setTop(int top) {
+		this.left = left;
 		this.top = top;
 	}
-
-	public int getLeft() {
-		return left;
+	
+	public void setSize(int width, int height) {
+		this.right = width;
+		this.bottom = height;
 	}
-
-	public void setLeft(int left) {
-		this.left = left;
-	}
-
-	public int getRight() {
-		return right;
-	}
-
-	public void setRight(int right) {
-		this.right = right;
+	
+	public void setPosition(int x, int y) {
+		this.left = x;
+		this.top = y;
 	}
 }

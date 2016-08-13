@@ -2,6 +2,7 @@ package character;
 
 import graphics.SpriteSheet;
 import graphics.View;
+import math.Box;
 import math.Vector2f;
 
 import java.awt.Color;
@@ -31,7 +32,6 @@ public class Character extends Entity {
     public Attributes attributes;
     private Ellipse2D.Double shadow = new Ellipse2D.Double(0, 0, 0, 0);
     private AffineTransform tx;
-    private int i = 0;
 
     public Character(float x, float y, BufferedImage image, boolean animatable) {
     	
@@ -60,6 +60,7 @@ public class Character extends Entity {
         this.animate = new Animate(this);
         this.attributes = new Attributes(this, 1, 2, 10, 100, 0);
         this.acceleration = attributes.speed;
+        this.collisionBox = new Box((int)20, (int)20, (int)80, (int)80);
         
         stop();
     }
@@ -143,6 +144,10 @@ public class Character extends Entity {
     	return animate;
     }
     
+    public Box getCollisionBox() {
+    	return collisionBox;
+    }
+    
     public void setIsAttacking(boolean b) {
     	isAttacking = b;
     }
@@ -157,8 +162,8 @@ public class Character extends Entity {
 	    	Vector2f drawPosition = getDrawPosition(view);
 	        Vector2f drawScale = getDrawScale(view);
 	        
-	        //if(xScaleLocal == -1) isFlipped = 1;
-	        //else isFlipped = 0;
+	        if(xScaleLocal == -1) isFlipped = 1;
+	        else isFlipped = 0;
 	        g.setColor(new Color(0f, 0f, 0f, 0.3f));
 	        //g.drawOval((int)(drawPosition.x-width/2), (int)drawPosition.y + height-10, (int)width, 10);
 	        shadow.setFrame((int)(drawPosition.x - 35), (int)drawPosition.y + height-13, 60, 10);
@@ -166,9 +171,10 @@ public class Character extends Entity {
 	        Shape rotatedShadow = tx.createTransformedShape(shadow);
 	        
 	        g.fill(rotatedShadow);
+	        g.setColor(new Color(1f, 0f, 0f, 1f));
+	        //g.drawRect((int)(drawPosition.x-(xScaleLocal*(collisionBox.right/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y);
+	        g.drawRect((int)(drawPosition.x-(xScaleLocal*(width/2)) + collisionBox.left), (int)drawPosition.y + collisionBox.top, (int)(collisionBox.right*xScaleLocal), (int)(collisionBox.bottom));
 	        g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
-	        //g.setColor(new Color(255, 0, 0));
-	        //g.drawRect( (int)(drawPosition.x-(xScaleLocal*(width/2)) - width * isFlipped), (int)drawPosition.y, (int)(drawScale.x), (int)drawScale.y);
 	        //if(isAttacking) {
 	    	//if(direction == 90) g.drawLine(Math.round(drawPosition.x), Math.round(drawPosition.y + height/2), Math.round(drawPosition.x + attackRange), Math.round(drawPosition.y + height/2));
 	    	//else if(direction == 270) g.drawLine(Math.round(drawPosition.x), Math.round(drawPosition.y + height/2), Math.round(drawPosition.x - attackRange), Math.round(drawPosition.y + height/2));
