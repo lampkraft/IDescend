@@ -7,6 +7,7 @@ import java.util.List;
 import character.Animate;
 import graphics.SpriteSheet;
 import graphics.View;
+import math.Box;
 import math.Vector2f;
 
 /**
@@ -16,6 +17,7 @@ public class Entity {
 	
     protected float xPos, yPos, xScale = 1.f, yScale = 1.f, xScaleLocal = 1.f, yScaleLocal = 1.f, angle = 0.f;
     protected int width, height, depth;
+    protected Box collisionBox;
     protected SpriteSheet sprite;
     protected BufferedImage image;
     protected Animate animate;

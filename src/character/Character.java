@@ -24,10 +24,9 @@ import game.Entity;
 public class Character extends Entity {
 
     protected Vector2f velocity = new Vector2f();
-    protected float acceleration=1.f, deacceleration=0.9f, friction=0.4f;
+    protected float acceleration, deacceleration=0.9f, friction=0.4f;
     protected int direction, isFlipped = 0;
     protected boolean isAttacking = false;
-    protected int attackRange, maxHealth = 100, health = maxHealth;
     public SpriteSheet spriteHurt, spriteWalk, spriteAttack, spriteDeath, spriteIdle, spriteCorpse;
     public Attributes attributes;
     private Ellipse2D.Double shadow = new Ellipse2D.Double(0, 0, 0, 0);
@@ -58,8 +57,9 @@ public class Character extends Entity {
         this.angle = 50;
         this.depth = (int)-yPos;
         this.direction = 1;
-        this.attackRange = 10;
         this.animate = new Animate(this);
+        this.attributes = new Attributes(this, 1, 2, 10, 100, 0);
+        this.acceleration = attributes.speed;
         
         stop();
     }
@@ -72,7 +72,7 @@ public class Character extends Entity {
     	if(!isAttacking) {
     		animate.clear();
 			isAttacking = true;
-	    	animate.setAnimation(3, spriteAttack, false, new Attacking(this));
+	    	animate.setAnimation(attributes.attackDelay, spriteAttack, false, new Attacking(this));
     	}
     }
     
@@ -86,9 +86,11 @@ public class Character extends Entity {
     }
     
     public void stop() {
+    	
     	if(!isAttacking) {
     		animate.setAnimation(2, spriteIdle, true, null);
     	}
+    	
     	velocity.x = velocity.x * deacceleration;
     	velocity.y = velocity.y * deacceleration;
     }
@@ -133,16 +135,8 @@ public class Character extends Entity {
     	return image;
     }
     
-    public int getHealth() {
-    	return health;
-    }
-    
-    public int getMaxHealth() {
-    	return maxHealth;
-    }
-    
-    public void setHealth(int health) {
-    	this.health = health;
+    public Attributes getAttributes() {
+    	return attributes;
     }
     
     public Animate getAnimate() {
@@ -151,10 +145,6 @@ public class Character extends Entity {
     
     public void setIsAttacking(boolean b) {
     	isAttacking = b;
-    }
-    
-    public int getAttackRange() {
-    	return attackRange;
     }
     
     public void update() {
@@ -169,7 +159,6 @@ public class Character extends Entity {
 	        
 	        //if(xScaleLocal == -1) isFlipped = 1;
 	        //else isFlipped = 0;
-	        i++;
 	        g.setColor(new Color(0f, 0f, 0f, 0.3f));
 	        //g.drawOval((int)(drawPosition.x-width/2), (int)drawPosition.y + height-10, (int)width, 10);
 	        shadow.setFrame((int)(drawPosition.x - 35), (int)drawPosition.y + height-13, 60, 10);

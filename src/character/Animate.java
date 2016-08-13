@@ -6,15 +6,16 @@ import graphics.SpriteSheet;
 public class Animate {
 	
 	private Character actor;
-	private int delay = 1, timer = 0, frame = 0;
-	boolean isPaused = false, loop = true, stop = false;
-	Event startEvent, endEvent;
+	private int frame = 0;
+	private float delay = 1, timer = 0;
+	private boolean isPaused = false, loop = true, stop = false;
+	private Event startEvent, endEvent;
 	 
 	public Animate(Character actor) {
 		this.actor = actor;
 	}
 	
-	public void setAnimation(int delay, SpriteSheet sprite, boolean loop, Event endEvent) {
+	public void setAnimation(float delay, SpriteSheet sprite, boolean loop, Event endEvent) {
 		this.delay = delay;
 		this.endEvent = endEvent;
 		this.loop = loop;
@@ -38,7 +39,7 @@ public class Animate {
 		frame = 0;
 	}
 	
-	public int getAnimationDelay() {
+	public float getAnimationDelay() {
 		return delay;
 	}
 	
