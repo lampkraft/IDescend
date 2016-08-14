@@ -1,5 +1,10 @@
 package character;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+import math.Vector2f;
+
 public class Attributes {
 	public int health, maxHealth, attackRange, level, experience;
 	public float speed, attackDelay;
@@ -29,5 +34,15 @@ public class Attributes {
 	
 	public Character getHost() {
 		return host;
+	}
+	
+	public void drawAttackRange(Graphics2D g, Vector2f drawPosition, Vector2f drawScale, float xScaleLocal) {
+		g.setColor(new Color(1f, 0f, 0f, 1f));
+		g.drawLine(
+				Math.round(drawPosition.x),
+				Math.round(drawPosition.y + host.getHeight()/2),
+				Math.round(drawPosition.x + attackRange*xScaleLocal),
+				Math.round(drawPosition.y + host.getHeight()/2)
+				);
 	}
 }

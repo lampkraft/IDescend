@@ -58,9 +58,9 @@ public class Character extends Entity {
         this.depth = (int)-yPos;
         this.direction = 1;
         this.animate = new Animate(this);
-        this.attributes = new Attributes(this, 1, 2, 10, 100, 0);
+        this.attributes = new Attributes(this, 1, 2, 50, 80, 0);//host, speed, attack delay, attack range, max health, experience
         this.acceleration = attributes.speed;
-        this.collisionBox = new Box((int)20, (int)20, (int)80, (int)80);
+        this.collisionBox = new Box(this, (int)30, (int)20, (int)30, (int)20);//left, top, right, bottom
         
         stop();
     }
@@ -165,21 +165,16 @@ public class Character extends Entity {
 	        if(xScaleLocal == -1) isFlipped = 1;
 	        else isFlipped = 0;
 	        g.setColor(new Color(0f, 0f, 0f, 0.3f));
-	        //g.drawOval((int)(drawPosition.x-width/2), (int)drawPosition.y + height-10, (int)width, 10);
 	        shadow.setFrame((int)(drawPosition.x - 35), (int)drawPosition.y + height-13, 60, 10);
 	        tx = AffineTransform.getRotateInstance(Math.toRadians (0), (int)(drawPosition.x - 35)+60/2, (int)(drawPosition.y + height-13)+10/2);
 	        Shape rotatedShadow = tx.createTransformedShape(shadow);
 	        
 	        g.fill(rotatedShadow);
-	        g.setColor(new Color(1f, 0f, 0f, 1f));
-	        //g.drawRect((int)(drawPosition.x-(xScaleLocal*(collisionBox.right/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y);
-	        g.drawRect((int)(drawPosition.x-(xScaleLocal*(width/2)) + collisionBox.left), (int)drawPosition.y + collisionBox.top, (int)(collisionBox.right*xScaleLocal), (int)(collisionBox.bottom));
+	        
 	        g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
-	        //if(isAttacking) {
-	    	//if(direction == 90) g.drawLine(Math.round(drawPosition.x), Math.round(drawPosition.y + height/2), Math.round(drawPosition.x + attackRange), Math.round(drawPosition.y + height/2));
-	    	//else if(direction == 270) g.drawLine(Math.round(drawPosition.x), Math.round(drawPosition.y + height/2), Math.round(drawPosition.x - attackRange), Math.round(drawPosition.y + height/2));
-	        	//isAttacking = false;
-	        //}
+	        collisionBox.draw(g, drawPosition, drawScale);
+	        attributes.drawAttackRange(g, drawPosition, drawScale, xScaleLocal);
+	    	
     	}
     }
 }

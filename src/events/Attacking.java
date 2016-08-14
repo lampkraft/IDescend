@@ -16,9 +16,8 @@ public class Attacking extends Event {
 		if(self.getDirection() == 90) {//hitting right
 			
 			for(Character target : ObjectsController.characters) {
-				if(self.getXPosCenter() + self.getAttributes().attackRange > target.getX() && self.getXPosCenter() < target.getXPosCenter() /*+ target.getWidth()*/ &&
-						(target.getYPosCenter() > self.getY() && target.getYPosCenter() < self.getY() + self.getHeight())) {
-					
+				
+				if(target.getCollisionBox().getCollisionPoint((int)(self.getXPosCenter() + self.getAttributes().attackRange), (int)(self.getYPosCenter()))) {
 					target.getAttributes().health -= 10;
 					if(target.getAttributes().health <= 0) {
 						target.getAnimate().setAnimation(2, target.spriteDeath, false, new Death(target));
@@ -31,9 +30,8 @@ public class Attacking extends Event {
 		} else if(self.getDirection() == 270) {//hitting left
 			
 			for(Character target : ObjectsController.characters) {
-				if(self.getXPosCenter() - self.getAttributes().attackRange < target.getX() + target.getWidth()  && self.getXPosCenter() > target.getXPosCenter()  &&
-						(target.getYPosCenter() > self.getY() && target.getYPosCenter() < self.getY() + self.getHeight())) {
-					
+				
+				if(target.getCollisionBox().getCollisionPoint((int)(self.getXPosCenter() - self.getAttributes().attackRange), (int)(self.getYPosCenter()))) {
 					target.getAttributes().health -= 10;
 					if(target.getAttributes().health <= 0) {
 						target.getAnimate().setAnimation(2, target.spriteDeath, false, new Death(target));
