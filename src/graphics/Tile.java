@@ -3,6 +3,7 @@ package graphics;
 import java.awt.image.BufferedImage;
 
 import game.Entity;
+import math.Box;
 
 /**
  * Created by Lampkraft on 2015-04-08.

@@ -88,6 +88,11 @@ public class Level{
 						ImageIO.read(new File((String)inner.get("Image_url"))),
 						false
 						);
+				
+				if(inner.get("Collision").toString().equals("true")) {
+					tile.createCollisionBox(5, 5, 5, 5);
+				}
+				
 				ObjectsController.addObject(tile);
 				ObjectsController.addTile((Tile)tile);
 			} catch (IOException e) {

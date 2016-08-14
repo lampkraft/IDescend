@@ -5,13 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import character.Character;
+import game.Entity;
 import graphics.View;
 
 public class Box {
 	public int left, top, right, bottom;
-	private Character host;
+	private Entity host;
 	
-	public Box(Character host) {
+	public Box(Entity host) {
 		this.host = host;
 		this.right = 0;
 		this.bottom = 0;
@@ -19,7 +20,7 @@ public class Box {
 		this.top = 0;
 	}
 	
-	public Box(Character host, int left, int top, int right, int bottom) {
+	public Box(Entity host, int left, int top, int right, int bottom) {
 		this.host = host;
 		this.right = right;
 		this.bottom = bottom;

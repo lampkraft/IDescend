@@ -122,6 +122,10 @@ public class Entity {
     	this.sprite = sprite;
     }
     
+    public void createCollisionBox(int left, int top, int right, int bottom) {
+    	collisionBox = new Box(this, left, top, right, bottom);
+    }
+    
     public void update() {
     }
     
@@ -129,6 +133,7 @@ public class Entity {
     	Vector2f drawPosition = getDrawPosition(view);
         Vector2f drawScale = getDrawScale(view);
         g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
+        if(collisionBox != null) collisionBox.draw(g, drawPosition, drawScale);
     }
 
 	public BufferedImage getImage() {
