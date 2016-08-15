@@ -27,13 +27,13 @@ public class NetworkPlayer extends Character
     {
         if(client.hasNewData())
         {
-            xPos = client.position.x;
-            yPos = client.position.y;
-            velocity.x = client.velocity.x;
-            velocity.y = client.velocity.y;
+            x = client.position.x;
+            y = client.position.y;
+            movement.velocity.x = client.velocity.x;
+            movement.velocity.y = client.velocity.y;
         }
         
-        move(delta);
+        movement.move(delta);
     }
     
     public String getId()

@@ -91,6 +91,7 @@ public class Level{
 				
 				if(inner.get("Collision").toString().equals("true")) {
 					tile.createCollisionBox(5, 5, 5, 5);
+					tile.setIsSolid(true);
 				}
 				
 				ObjectsController.addObject(tile);

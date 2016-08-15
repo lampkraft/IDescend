@@ -5,7 +5,7 @@ import game.ObjectsController;
 
 public class Attacking extends Event {
 	
-	Character self;
+	public Character self;
 	
 	public Attacking(Character self) {
 		this.self = self;
@@ -13,7 +13,7 @@ public class Attacking extends Event {
 	
 	public void trigger() {
 		
-		if(self.getDirection() == 90) {//hitting right
+		if(self.getMovement().direction == 90) {//hitting right
 			
 			for(Character target : ObjectsController.characters) {
 				
@@ -27,7 +27,7 @@ public class Attacking extends Event {
 				}
 			}
 			
-		} else if(self.getDirection() == 270) {//hitting left
+		} else if(self.getMovement().direction == 270) {//hitting left
 			
 			for(Character target : ObjectsController.characters) {
 				

@@ -15,11 +15,11 @@ public class Tile extends Entity{
         this.sprite = new SpriteSheet(image, 0, 0, width, height, 1, 1, 1);
         this.image = this.sprite.getSubimage(0);
         this.isAnimatable = animatable;
-        this.xPos = x;
-        this.yPos = y;
+        this.x = x;
+        this.y = y;
         this.width = width;
         this.height = height;
-        this.depth = (int)(-yPos*depth);
+        this.depth = (int)(-y*depth);
     }
     
     public Tile(float x, float y, int width, int height, float depth, SpriteSheet sprite, boolean animatable)
@@ -27,11 +27,11 @@ public class Tile extends Entity{
         this.sprite = sprite;
         this.image = this.sprite.getSubimage(0);
         this.isAnimatable = animatable;
-        this.xPos = x;
-        this.yPos = y;
+        this.x = x;
+        this.y = y;
         this.width = width;
         this.height = height;
-        this.depth = (int)(-yPos*depth);
+        this.depth = (int)(-y*depth);
     }
     
     public BufferedImage getImage() {

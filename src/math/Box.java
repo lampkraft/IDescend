@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import character.Character;
 import game.Entity;
+import game.ObjectsController;
 import graphics.View;
 
 public class Box {
@@ -33,6 +34,22 @@ public class Box {
 		this.bottom = height;
 	}
 	
+	public int getAbsoluteX() {
+		return (int)host.x + left;
+	}
+	
+	public int getAbsoluteY() {
+		return (int)host.y + top;
+	}
+	
+	public int getAbsoluteWidth() {
+		return (int)host.getWidth() - right;
+	}
+	
+	public int getAbsoluteHeight() {
+		return (int)host.getHeight() - bottom;
+	}
+	
 	public void setPosition(int x, int y) {
 		this.left = x;
 		this.top = y;
@@ -42,6 +59,28 @@ public class Box {
 		if(		x > host.getX() + left && y > host.getY() + top &&
 				x < host.getX() + host.getWidth() - right && y < host.getY() + host.getHeight() - bottom) {
 			return true;
+		}
+		return false;
+	}
+	
+	public boolean getCollisionMeeting(int checkX, int checkY) {
+		
+		ObjectsController.tilesIterator = ObjectsController.tiles.iterator();
+		Entity e;
+		while (ObjectsController.tilesIterator.hasNext()) {
+			e = ObjectsController.tilesIterator.next();
+			if(e.getIsSolid()) {
+				if(
+						getAbsoluteX() + checkX < e.getCollisionBox().getAbsoluteX() + e.getCollisionBox().getAbsoluteWidth() &&
+						getAbsoluteX() + checkX + getAbsoluteWidth() > e.getCollisionBox().getAbsoluteX() &&
+						getAbsoluteY() + checkY < e.getCollisionBox().getAbsoluteY() + e.getCollisionBox().getAbsoluteHeight() &&
+						getAbsoluteHeight() + getAbsoluteY() + checkY > e.getCollisionBox().getAbsoluteY()
+				  ) {
+					System.out.println("COLLISION!");
+					return true;
+				}
+			}
+				
 		}
 		return false;
 	}

@@ -15,20 +15,22 @@ import math.Vector2f;
  */
 public class Entity {
 	
-    protected float xPos, yPos, xScale = 1.f, yScale = 1.f, xScaleLocal = 1.f, yScaleLocal = 1.f, angle = 0.f;
+    protected float xScale = 1.f, yScale = 1.f, xScaleLocal = 1.f, yScaleLocal = 1.f, angle = 0.f;
+    public float x, y;
     protected int width, height, depth;
     protected Box collisionBox;
     protected SpriteSheet sprite;
     protected BufferedImage image;
     protected Animate animate;
+    protected boolean isSolid;
     protected List<SpriteSheet> animations = new ArrayList<SpriteSheet>();
     
     protected boolean isAnimatable, invisible = false;
 
     protected Vector2f getDrawPosition(View view)
     {
-        return new Vector2f(((xPos - view.getX() + view.getWidth()/2 - width/2) * view.getZoom()) + view.getWidth()/2,
-                            ((yPos - view.getY() + view.getHeight()/2 - height/2) * view.getZoom()) + view.getHeight()/2);
+        return new Vector2f(((x - view.getX() + view.getWidth()/2 - width/2) * view.getZoom()) + view.getWidth()/2,
+                            ((y - view.getY() + view.getHeight()/2 - height/2) * view.getZoom()) + view.getHeight()/2);
     }
 
     protected Vector2f getDrawScale(View view)
@@ -44,8 +46,8 @@ public class Entity {
 
     public void setPosition(float x, float y)
     {
-        xPos = x;
-        yPos = y;
+        this.x = x;
+        this.y = y;
     }
 
     public void setSize(int width, int height)
@@ -76,22 +78,22 @@ public class Entity {
 
     public void setX(float x)
     {
-        xPos = x;
+    	this.x = x;
     }
 
     public float getX()
     {
-        return xPos;
+        return x;
     }
     
     public void setY(float y)
     {
-        yPos = y;
+    	this.y = y;
     }
 
     public float getY()
     {
-        return yPos;
+        return y;
     }
     
     public int getDepth() {
@@ -99,11 +101,11 @@ public class Entity {
     }
     
     public float getXPosCenter() {
-    	return xPos + width/2;
+    	return x + width/2;
     }
     
     public float getYPosCenter() {
-    	return yPos + height/2;
+    	return y + height/2;
     }
     
     public void setInvisible(boolean b) {
@@ -122,6 +124,18 @@ public class Entity {
     	this.sprite = sprite;
     }
     
+    public boolean getIsSolid() {
+    	return isSolid;
+    }
+    
+    public void setIsSolid(boolean b) {
+    	isSolid = b;
+    }
+    
+    public Box getCollisionBox() {
+    	return collisionBox;
+    }
+    
     public void createCollisionBox(int left, int top, int right, int bottom) {
     	collisionBox = new Box(this, left, top, right, bottom);
     }
@@ -134,6 +148,7 @@ public class Entity {
         Vector2f drawScale = getDrawScale(view);
         g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
         if(collisionBox != null) collisionBox.draw(g, drawPosition, drawScale);
+        g.drawRect((int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y);
     }
 
 	public BufferedImage getImage() {

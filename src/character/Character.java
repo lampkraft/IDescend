@@ -24,12 +24,11 @@ import game.Entity;
 
 public class Character extends Entity {
 
-    protected Vector2f velocity = new Vector2f();
-    protected float acceleration, deacceleration=0.9f, friction=0.4f;
-    protected int direction, isFlipped = 0;
+    protected int isFlipped = 0;
     protected boolean isAttacking = false;
     public SpriteSheet spriteHurt, spriteWalk, spriteAttack, spriteDeath, spriteIdle, spriteCorpse;
-    public Attributes attributes;
+    protected Attributes attributes;
+    protected Movement movement; 
     private Ellipse2D.Double shadow = new Ellipse2D.Double(0, 0, 0, 0);
     private AffineTransform tx;
 
@@ -50,23 +49,16 @@ public class Character extends Entity {
         this.sprite = spriteIdle;
         this.image = sprite.getSubimage(0);
         this.isAnimatable = animatable;
-        this.xPos = x;
-        this.yPos = y;
+        this.x = x;
+        this.y = y;
         this.width = sprite.getSpriteWidth();
         this.height = sprite.getSpriteHeight();
         this.angle = 50;
-        this.depth = (int)-yPos;
-        this.direction = 1;
+        this.depth = (int)-y;
         this.animate = new Animate(this);
         this.attributes = new Attributes(this, 1, 2, 50, 80, 0);//host, speed, attack delay, attack range, max health, experience
-        this.acceleration = attributes.speed;
+        this.movement = new Movement(this);
         this.collisionBox = new Box(this, (int)30, (int)20, (int)30, (int)20);//left, top, right, bottom
-        
-        stop();
-    }
-    
-    public Vector2f getVelocity() {
-        return velocity;
     }
     
     public void attack(int attackDir) {
@@ -81,57 +73,6 @@ public class Character extends Entity {
     	animate.setAnimation(2, spriteDeath, false, new Death(this));
     }
     
-    public void move(double delta) {
-    	xPos += velocity.x * delta;
-        yPos -= velocity.y * delta;
-    }
-    
-    public void stop() {
-    	
-    	if(!isAttacking) {
-    		animate.setAnimation(2, spriteIdle, true, null);
-    	}
-    	
-    	velocity.x = velocity.x * deacceleration;
-    	velocity.y = velocity.y * deacceleration;
-    }
-
-    public void moveUp() {
-    	//direction = 0;
-    	if(!isAttacking) {
-    		animate.setAnimation(4, spriteWalk, true, null);
-    	}
-    	velocity.y += (acceleration * friction);
-    }
-
-    public void moveDown() {
-    	//direction = 180;
-    	if(!isAttacking) {
-    		animate.setAnimation(4, spriteWalk, true, null);
-    	}
-    	velocity.y -= (acceleration * friction);
-    }
-
-    public void moveRight() {
-    	direction = 90;
-    	if(!isAttacking) {
-    		animate.setAnimation(4, spriteWalk, true, null);
-    	}
-    	velocity.x += acceleration * friction;
-    }
-
-    public void moveLeft() {
-    	direction = 270;
-    	if(!isAttacking) {
-    		animate.setAnimation(4, spriteWalk, true, null);
-    	}
-    	velocity.x -= acceleration * friction;
-    }
-    
-    public int getDirection() {
-    	return direction;
-    }
-    
     public BufferedImage getImage() {
     	return image;
     }
@@ -140,12 +81,12 @@ public class Character extends Entity {
     	return attributes;
     }
     
-    public Animate getAnimate() {
-    	return animate;
+    public Movement getMovement() {
+    	return movement;
     }
     
-    public Box getCollisionBox() {
-    	return collisionBox;
+    public Animate getAnimate() {
+    	return animate;
     }
     
     public void setIsAttacking(boolean b) {
@@ -173,6 +114,7 @@ public class Character extends Entity {
 	        
 	        g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
 	        collisionBox.draw(g, drawPosition, drawScale);
+	        g.drawRect((int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y);
 	        attributes.drawAttackRange(g, drawPosition, drawScale, xScaleLocal);
 	    	
     	}

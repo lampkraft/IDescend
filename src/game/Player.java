@@ -26,31 +26,32 @@ public class Player extends Character
 
     public void update(Keyboard key, double delta, View view)
     {
-        prevVel.copy(velocity);
+        prevVel.copy(movement.velocity);
         
-        stop();
+        movement.stop();
         
         if(key.up.isHeld() || key.wkey.isHeld())
-            moveUp();
+            movement.moveUp();
         if(key.down.isHeld() || key.skey.isHeld())
-            moveDown();
+        	movement.moveDown();
         if(key.left.isHeld() || key.akey.isHeld())
-            moveLeft();
+        	movement.moveLeft();
         if(key.right.isHeld() || key.dkey.isHeld())
-            moveRight();
+        	movement.moveRight();
         if(key.zkey.isHeld())
-            attack(direction);
+            attack(movement.direction);
         
-        move(delta);
-        if(direction == 90 || direction == 270) {
-        	xScaleLocal = (float)Math.sin(Math.toRadians(direction));
+        movement.move(delta);
+        if(movement.direction == 90 || movement.direction == 270) {
+        	//xScaleLocal = (float)Math.sin(Math.toRadians(movement.direction));
+        	xScaleLocal = 1;
         }
         
-        if(!velocity.compare(prevVel))
+        if(!movement.velocity.compare(prevVel))
             newData = true;
 
-        view.setPosition(xPos, yPos);
-        depth = (int)-yPos;
+        view.setPosition(x, y);
+        depth = (int)-y;
     }
     
     public boolean hasNewData()
