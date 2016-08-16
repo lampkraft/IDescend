@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import events.Attacking;
 import events.Death;
 import game.Entity;
+import game.ObjectsController;
 
 public class Character extends Entity {
 
@@ -114,7 +115,14 @@ public class Character extends Entity {
 	        
 	        g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
 	        collisionBox.draw(g, drawPosition, drawScale);
-	        g.drawRect((int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y);
+	        g.setColor(new Color(0f, 0f, 0f, 1f));
+	        //g.drawRect((int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y);
+	        g.drawRect(
+					(int)(drawPosition.x-((width/2))),
+					(int)(drawPosition.y),
+					(int)((drawScale.x)),
+					(int)(drawScale.y)
+					);
 	        attributes.drawAttackRange(g, drawPosition, drawScale, xScaleLocal);
 	    	
     	}

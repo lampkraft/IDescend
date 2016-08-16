@@ -4,6 +4,7 @@ package game;
 import input.Keyboard;
 import math.Vector2f;
 import graphics.SpriteSheet;
+import graphics.Tile;
 import graphics.View;
 import java.awt.image.BufferedImage;
 
@@ -43,8 +44,7 @@ public class Player extends Character
         
         movement.move(delta);
         if(movement.direction == 90 || movement.direction == 270) {
-        	//xScaleLocal = (float)Math.sin(Math.toRadians(movement.direction));
-        	xScaleLocal = 1;
+        	xScaleLocal = (float)Math.sin(Math.toRadians(movement.direction));
         }
         
         if(!movement.velocity.compare(prevVel))
@@ -52,6 +52,16 @@ public class Player extends Character
 
         view.setPosition(x, y);
         depth = (int)-y;
+        
+    	for(Tile target : ObjectsController.tiles) {
+    		if(/*target != this*/ target.isSolid) {
+	    		if(collisionBox.getCollisionMeeting(target, 0, 0)) {
+	    			target.isColiding = true;
+	    		} else {
+	    			target.isColiding = false;
+	    		}
+    		}
+    	}
     }
     
     public boolean hasNewData()

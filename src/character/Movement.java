@@ -33,11 +33,8 @@ public class Movement {
     		self.getAnimate().setAnimation(4, self.spriteWalk, true, null);
     	}
     	
-    	if(!self.getCollisionBox().getCollisionMeeting(0, -1)) {
-    		velocity.y += (acceleration * friction);
-    	} else {
-    		velocity.y = 0;
-    	}
+    	
+    	velocity.y += (acceleration * friction);
     	
     }
 
@@ -46,11 +43,8 @@ public class Movement {
     		self.getAnimate().setAnimation(4, self.spriteWalk, true, null);
     	}
     	
-    	if(!self.getCollisionBox().getCollisionMeeting(0, 1)) {
-    		velocity.y -= (acceleration * friction);
-    	} else {
-    		velocity.y = 0;
-    	}
+    	
+    	velocity.y -= (acceleration * friction);
     }
 
     public void moveRight() {
@@ -59,11 +53,8 @@ public class Movement {
     		self.getAnimate().setAnimation(4, self.spriteWalk, true, null);
     	}
     	
-    	if(!self.getCollisionBox().getCollisionMeeting(1, 0)) {
-    		velocity.x += acceleration * friction;
-    	} else {
-    		velocity.x = 0;
-    	}
+    	
+    	velocity.x += acceleration * friction;
     }
 
     public void moveLeft() {
@@ -72,11 +63,8 @@ public class Movement {
     		self.getAnimate().setAnimation(4, self.spriteWalk, true, null);
     	}
     	
-    	if(!self.getCollisionBox().getCollisionMeeting(-1, 0)) {
-    		velocity.x -= acceleration * friction;
-    	} else {
-    		velocity.x = 0;
-    	}
+    	
+    	velocity.x -= acceleration * friction;
     }
     
 }

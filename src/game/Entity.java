@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -17,11 +18,13 @@ public class Entity {
 	
     protected float xScale = 1.f, yScale = 1.f, xScaleLocal = 1.f, yScaleLocal = 1.f, angle = 0.f;
     public float x, y;
+    public boolean isColiding = false;
     protected int width, height, depth;
     protected Box collisionBox;
     protected SpriteSheet sprite;
     protected BufferedImage image;
     protected Animate animate;
+    protected String name = "";
     protected boolean isSolid;
     protected List<SpriteSheet> animations = new ArrayList<SpriteSheet>();
     
@@ -140,15 +143,31 @@ public class Entity {
     	collisionBox = new Box(this, left, top, right, bottom);
     }
     
+    public String getName() {
+    	return name;
+    }
+    
+    public void setName(String name) {
+    	this.name = name;
+    }
+    
     public void update() {
     }
     
     public void draw(Graphics2D g, View view, BufferedImage image) {
+    	
     	Vector2f drawPosition = getDrawPosition(view);
         Vector2f drawScale = getDrawScale(view);
+        
         g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
         if(collisionBox != null) collisionBox.draw(g, drawPosition, drawScale);
-        g.drawRect((int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y);
+        g.setColor(new Color(0f, 0f, 0f, 1f));
+        g.drawRect(
+				(int)(drawPosition.x-((width/2))),
+				(int)(drawPosition.y),
+				(int)((drawScale.x)),
+				(int)(drawScale.y)
+				);
     }
 
 	public BufferedImage getImage() {
