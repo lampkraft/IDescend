@@ -39,7 +39,7 @@ public class Character extends Entity {
         	spriteHurt = new SpriteSheet(ImageIO.read(new File("res/sprites/mage/spr_mage_hurt_strip4.png")), 0, 0, 100, 100, 4, 1, 4);
         	spriteWalk = new SpriteSheet(ImageIO.read(new File("res/sprites/mage/spr_mage_walk_strip8.png")), 0, 0, 100, 100, 8, 1, 8);
         	spriteAttack = new SpriteSheet(ImageIO.read(new File("res/sprites/mage/spr_mage_attack_melee_strip7.png")), 0, 0, 100, 100, 7, 1, 7);
-        	spriteIdle =  new SpriteSheet(ImageIO.read(new File("res/sprites/mage/spr_mage_idle.png")), 0, 0, 100, 100, 1, 1, 1);
+        	spriteIdle = new SpriteSheet(ImageIO.read(new File("res/sprites/mage/spr_mage_idle.png")), 0, 0, 100, 100, 1, 1, 1);
         	spriteDeath =  new SpriteSheet(ImageIO.read(new File("res/sprites/mage/spr_mage_death_strip6.png")), 0, 0, 100, 100, 6, 1, 6);
         	spriteCorpse = new SpriteSheet(ImageIO.read(new File("res/sprites/mage/spr_mage_corpse.png")), 0, 0, 100, 100, 1, 1, 1);
 			//animations.add(new SpriteSheet(ImageIO.read(new File("res/sprites/character_walk.png")), 0, 0, 130, 150, 7, 4, 27));
@@ -59,7 +59,7 @@ public class Character extends Entity {
         this.animate = new Animate(this);
         this.attributes = new Attributes(this, 1, 2, 50, 80, 0);//host, speed, attack delay, attack range, max health, experience
         this.movement = new Movement(this);
-        this.collisionBox = new Box(this, (int)30, (int)20, (int)30, (int)20);//left, top, right, bottom
+        this.collisionBox = new Box(this, 10, 10, 5, 5);//left, top, right, bottom
     }
     
     public void attack(int attackDir) {
@@ -95,6 +95,7 @@ public class Character extends Entity {
     }
     
     public void update() {
+    	//collisionBox.update();
     	animate.update();
     }
     
@@ -104,8 +105,6 @@ public class Character extends Entity {
 	    	Vector2f drawPosition = getDrawPosition(view);
 	        Vector2f drawScale = getDrawScale(view);
 	        
-	        if(xScaleLocal == -1) isFlipped = 1;
-	        else isFlipped = 0;
 	        g.setColor(new Color(0f, 0f, 0f, 0.3f));
 	        shadow.setFrame((int)(drawPosition.x - 35), (int)drawPosition.y + height-13, 60, 10);
 	        tx = AffineTransform.getRotateInstance(Math.toRadians (0), (int)(drawPosition.x - 35)+60/2, (int)(drawPosition.y + height-13)+10/2);
@@ -114,9 +113,8 @@ public class Character extends Entity {
 	        g.fill(rotatedShadow);
 	        
 	        g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
-	        collisionBox.draw(g, drawPosition, drawScale);
+	        if(collisionBox != null) collisionBox.draw(g, drawPosition, drawScale);
 	        g.setColor(new Color(0f, 0f, 0f, 1f));
-	        //g.drawRect((int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y);
 	        g.drawRect(
 					(int)(drawPosition.x-((width/2))),
 					(int)(drawPosition.y),

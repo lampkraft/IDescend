@@ -55,7 +55,7 @@ public class Player extends Character
         
     	for(Tile target : ObjectsController.tiles) {
     		if(/*target != this*/ target.isSolid) {
-	    		if(collisionBox.getCollisionMeeting(target, 0, 0)) {
+	    		if(collisionBox.getCollisionMeeting(target, (int)target.x, (int)target.y)) {
 	    			target.isColiding = true;
 	    		} else {
 	    			target.isColiding = false;

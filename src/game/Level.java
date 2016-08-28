@@ -23,6 +23,7 @@ import org.json.simple.parser.ParseException;
 
 import character.Character;
 import graphics.Background;
+import graphics.SpriteSheet;
 import graphics.Tile;
 import graphics.View;
 import math.Maths;
@@ -79,18 +80,32 @@ public class Level{
 			JSONObject inner = (JSONObject) i.next();
 			
 			try {
-				Entity tile = new Tile(
-						Float.parseFloat(inner.get("X").toString()),
-						Float.parseFloat(inner.get("Y").toString()),
-						Integer.parseInt(inner.get("Width").toString()),
-						Integer.parseInt(inner.get("Height").toString()),
-						Float.parseFloat(inner.get("Depth").toString()),
-						ImageIO.read(new File((String)inner.get("Image_url"))),
-						false
-						);
+				Entity tile;
+				if(!inner.get("Collision").toString().equals("true")) {
+					tile = new Tile(
+							Float.parseFloat(inner.get("X").toString()),
+							Float.parseFloat(inner.get("Y").toString()),
+							Integer.parseInt(inner.get("Width").toString()),
+							Integer.parseInt(inner.get("Height").toString()),
+							1,
+							new SpriteSheet(ImageIO.read(new File("res/sprites/character_walk.png")), 0, 0, 130, 130, 1, 1, 1),
+							false
+							);
+				} else {
+					tile = new Tile(
+							Float.parseFloat(inner.get("X").toString()),
+							Float.parseFloat(inner.get("Y").toString()),
+							Integer.parseInt(inner.get("Width").toString()),
+							Integer.parseInt(inner.get("Height").toString()),
+							Float.parseFloat(inner.get("Depth").toString()),
+							ImageIO.read(new File((String)inner.get("Image_url"))),
+							false
+							);
+				}
+				
 				
 				if(inner.get("Collision").toString().equals("true")) {
-					tile.createCollisionBox(5, 5, 5, 5);
+					tile.createCollisionBox(10, 10, 0, 50);
 					tile.setIsSolid(true);
 					tile.setName("Solid");
 				}

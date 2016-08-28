@@ -16,7 +16,7 @@ import math.Vector2f;
  */
 public class Entity {
 	
-    protected float xScale = 1.f, yScale = 1.f, xScaleLocal = 1.f, yScaleLocal = 1.f, angle = 0.f;
+    public float xScale = 1.f, yScale = 1.f, xScaleLocal = 1.f, yScaleLocal = 1.f, angle = 0.f;
     public float x, y;
     public boolean isColiding = false;
     protected int width, height, depth;
@@ -32,8 +32,8 @@ public class Entity {
 
     protected Vector2f getDrawPosition(View view)
     {
-        return new Vector2f(((x - view.getX() + view.getWidth()/2 - width/2) * view.getZoom()) + view.getWidth()/2,
-                            ((y - view.getY() + view.getHeight()/2 - height/2) * view.getZoom()) + view.getHeight()/2);
+        return new Vector2f(((x - view.getX() + view.getWidth()/2 - width/2)/* * view.getZoom()*/) + view.getWidth()/2,
+                            ((y - view.getY() + view.getHeight()/2 - height/2)/* * view.getZoom()*/) + view.getHeight()/2);
     }
 
     protected Vector2f getDrawScale(View view)
@@ -155,19 +155,7 @@ public class Entity {
     }
     
     public void draw(Graphics2D g, View view, BufferedImage image) {
-    	
-    	Vector2f drawPosition = getDrawPosition(view);
-        Vector2f drawScale = getDrawScale(view);
-        
-        g.drawImage(image, (int)(drawPosition.x-(xScaleLocal*(width/2))), (int)drawPosition.y, (int)(drawScale.x*xScaleLocal), (int)drawScale.y, null);
-        if(collisionBox != null) collisionBox.draw(g, drawPosition, drawScale);
-        g.setColor(new Color(0f, 0f, 0f, 1f));
-        g.drawRect(
-				(int)(drawPosition.x-((width/2))),
-				(int)(drawPosition.y),
-				(int)((drawScale.x)),
-				(int)(drawScale.y)
-				);
+
     }
 
 	public BufferedImage getImage() {

@@ -26,7 +26,7 @@ public class Death extends Event  {
 				character.getWidth(),
 				character.getHeight(),
 				character.getDepth(),
-				character.spriteCorpse,
+				character.spriteCorpse.getSubimage(0),
 				false
 				);
 	}

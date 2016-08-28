@@ -11,6 +11,7 @@ import graphics.View;
 
 public class Box {
 	public int left, top, right, bottom;
+	public float x, y;
 	private Entity host;
 	
 	public Box(Entity host) {
@@ -19,6 +20,8 @@ public class Box {
 		this.bottom = 0;
 		this.left = 0;
 		this.top = 0;
+		setAbsoluteX();
+		setAbsoluteY();
 	}
 	
 	public Box(Entity host, int left, int top, int right, int bottom) {
@@ -27,6 +30,8 @@ public class Box {
 		this.bottom = bottom;
 		this.left = left;
 		this.top = top;
+		//setAbsoluteX();
+		//setAbsoluteY();
 	}
 	
 	public void setSize(int width, int height) {
@@ -43,11 +48,19 @@ public class Box {
 	}
 	
 	public int getAbsoluteWidth() {
-		return (int)host.getWidth() - right;
+		return (int)host.getWidth() - right - left;
 	}
 	
 	public int getAbsoluteHeight() {
-		return (int)host.getHeight() - bottom;
+		return (int)host.getHeight() - bottom - top;
+	}
+	
+	public void setAbsoluteX() {
+		x = host.x + left;
+	}
+	
+	public void setAbsoluteY() {
+		y = host.y + top;
 	}
 	
 	public void setPosition(int x, int y) {
@@ -68,14 +81,26 @@ public class Box {
 	public boolean getCollisionMeeting(Entity target, int checkX, int checkY) {
 		
 		if(
-				getAbsoluteX() + getAbsoluteWidth() - left > target.getCollisionBox().getAbsoluteX() &&
-				getAbsoluteX() + right < target.getCollisionBox().getAbsoluteX() + target.getCollisionBox().getAbsoluteWidth() &&
-				getAbsoluteY() + getAbsoluteHeight() - top > target.getCollisionBox().getAbsoluteY() &&
-				getAbsoluteY() + bottom < target.getCollisionBox().getAbsoluteY() + target.getCollisionBox().getAbsoluteHeight()
+				/*getAbsoluteX() + getAbsoluteWidth() > target.getCollisionBox().getAbsoluteX() &&
+				getAbsoluteX() < target.getCollisionBox().getAbsoluteX() + target.getCollisionBox().getAbsoluteWidth() &&
+				getAbsoluteY() + getAbsoluteHeight() > target.getCollisionBox().getAbsoluteY() &&
+				getAbsoluteY() < target.getCollisionBox().getAbsoluteY() + target.getCollisionBox().getAbsoluteHeight()*/
+				/*host.x + host.getWidth() > target.x &&
+				host.x < target.x + target.getWidth() &&
+				host.y + host.getHeight() > target.y &&
+				host.y < target.y + target.getHeight()*/
+				checkX > host.getX() + left &&
+				checkY > host.getY() + top &&
+				checkX < host.getX() + host.getWidth() - right &&
+				checkY < host.getY() + host.getHeight() - bottom
 		  ) {
 			return true;
 		}
 		return false;
+	}
+	
+	public void update() {
+
 	}
 	
 	public void draw(Graphics2D g, Vector2f drawPosition, Vector2f drawScale) {
